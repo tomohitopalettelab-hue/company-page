@@ -261,9 +261,18 @@ export default function PaletteLab({ latestNews }: NewsProps) {
             <button onClick={() => { document.getElementById('tokusho-modal')!.style.display = 'none' }} className="absolute top-8 right-8 text-slate-400 hover:text-slate-900"><X size={24} /></button>
             <h3 className="text-2xl font-black text-slate-900 mb-8 border-b border-slate-100 pb-4">特定商取引法に基づく表記</h3>
             <div className="space-y-6 text-sm text-slate-600 leading-relaxed">
-              <div><p className="font-bold text-slate-900">運営責任者</p><p>森重 澄</p></div>
+              <div><p className="font-bold text-slate-900">事業者名</p><p>Palette Lab</p></div>
+              <div><p className="font-bold text-slate-900">住所</p><p>〒661-0972 兵庫県尼崎市小中島3-1-7</p></div>
+              <div><p className="font-bold text-slate-900">電話番号</p><p>070-2667-5457</p></div>
               <div><p className="font-bold text-slate-900">メールアドレス</p><p>info@palette-lab.com</p></div>
-              <div><p className="font-bold text-slate-900">返品・返金ポリシー</p><p>デジタルコンテンツの性質上、原則返品不可。重大な不備がある場合のみ対応。</p></div>
+              <div><p className="font-bold text-slate-900">運営責任者</p><p>森重 澄</p></div>
+              <div><p className="font-bold text-slate-900">追加手数料</p><p>なし</p></div>
+              <div><p className="font-bold text-slate-900">交換および返品に関するポリシー</p><p>"返品・交換・キャンセル等サービスの性質上、提供開始後のお客様都合による返品・交換・キャンセルはお受けできません。※解約は更新時期に限りマイページからいつでも可能ですが、既に支払われた料金の返金（日割り計算を含む）は行っておりません。
+不具合・瑕疵による対応に関しては、万が一、システム上の不具合等によりサービスが利用できない場合は、速やかに調査・修正対応を行います。
+原因が当社側にあり、長期間利用不能となった場合に限り、個別に対応を検討いたします。"</p></div>
+              <div><p className="font-bold text-slate-900">配達時間</p><p>注文は 3 ～ 5 営業日以内に処理されます。 商品は 契約の属する月の翌月中に利用可能です。</p></div>
+              <div><p className="font-bold text-slate-900">利用可能な決済手段</p><p>クレジットカード決済はただちに処理されますが、国内の銀行振込は注文から15日以内に送金する必要があります。</p></div>
+              <div><p className="font-bold text-slate-900">価格</p><p>5,000 円～ サービスによって変動。</p></div>
             </div>
           </div>
         </div>
