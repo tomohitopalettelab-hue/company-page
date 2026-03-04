@@ -14,10 +14,9 @@ export default async function NewsPage() {
     date: new Date(item.publishedAt).toLocaleDateString('ja-JP').replace(/\//g, '.'),
     category: item.category || "Release", // カテゴリがあれば取得
     title: item.title,
-    // 17行目をこれに書き換え
-excerpt: item.content 
-  ? item.content.replace(/<[^>]*>?/gm, '').substring(0, 100) + "..." 
-  : "本文はありません。"
+    excerpt: (item.body || item.content)
+      ? (item.body || item.content).replace(/<[^>]*>?/gm, '').substring(0, 100) + "..."
+      : "本文はありません。"
   }));
 
   return <NewsListClient newsItems={newsItems} />;

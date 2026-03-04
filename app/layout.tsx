@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
+import Image from "next/image";
+import { Menu } from "lucide-react";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,6 +30,34 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <nav className="fixed top-0 left-0 w-full z-[300] px-6 py-4 md:px-10 bg-white/70 backdrop-blur-2xl border-b border-white/20">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <Link href="/" className="active:scale-95 transition-transform">
+              <Image src="/palette-lab-logo.png" alt="Palette Lab" width={160} height={48} priority className="h-9 md:h-10 w-auto" />
+            </Link>
+            <div className="flex items-center gap-4 md:gap-10">
+              <details className="relative lg:hidden">
+                <summary className="list-none cursor-pointer p-2 rounded-xl bg-white/80 border border-slate-200 text-slate-700 hover:text-blue-600 transition-colors">
+                  <Menu size={20} />
+                </summary>
+                <div className="absolute right-0 mt-3 w-52 rounded-2xl border border-slate-100 bg-white/95 backdrop-blur-xl shadow-xl p-2">
+                  <Link href="/news" className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors">News</Link>
+                  <Link href="/solution" className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors">Solutions</Link>
+                  <Link href="/about" className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors">About</Link>
+                  <Link href="/contact" className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors">Contact</Link>
+                </div>
+              </details>
+              <div className="hidden lg:flex gap-10 text-xs font-black tracking-widest text-slate-400 uppercase">
+                <Link href="/news" className="hover:text-blue-600 transition-colors">News</Link>
+                <Link href="/solution" className="hover:text-blue-600 transition-colors">Solutions</Link>
+                <Link href="/about" className="hover:text-blue-600 transition-colors">About</Link>
+              </div>
+              <Link href="/contact" className="hidden lg:inline-flex px-6 py-2.5 rounded-2xl bg-slate-900 text-white text-xs font-black tracking-tighter hover:bg-blue-600 transition-all">
+                CONTACT
+              </Link>
+            </div>
+          </div>
+        </nav>
         {children}
       </body>
     </html>
