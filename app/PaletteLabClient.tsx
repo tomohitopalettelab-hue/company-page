@@ -240,8 +240,8 @@ export default function PaletteLab({ latestNews }: NewsProps) {
                       </div>
                       <span className="text-[10px] font-black tracking-widest text-slate-300 uppercase">{service.category}</span>
                     </div>
-                    <p className="text-xs font-bold text-blue-500 mb-2 h-10 line-clamp-2">{service.role}</p>
-                    <h4 className="text-xl font-black text-slate-900 mb-4">{service.serviceName}</h4>
+                    <h4 className="text-xl font-black text-slate-900 mb-2">{service.serviceName}</h4>
+                    <p className="text-xs font-bold text-blue-500 mb-4 h-10 line-clamp-2">{service.role}</p>
                     <p className="text-sm text-slate-500 leading-relaxed mb-8">{service.desc}</p>
                   </div>
                   <Link href={service.path} className="flex items-center justify-between w-full p-4 rounded-2xl bg-slate-50 text-slate-900 font-bold text-sm hover:bg-slate-900 hover:text-white transition-all group/btn">
