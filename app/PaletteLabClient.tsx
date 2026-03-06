@@ -212,15 +212,15 @@ export default function PaletteLab({ latestNews }: NewsProps) {
       {/* --- SERVICE SECTION (背景：淡いグレー) --- */}
       <section id="services" className="relative z-10 py-32 px-6 bg-[#F1F5F9] border-y border-slate-200">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-2xl">
+          <div className="mb-16 text-center">
+            <div className="max-w-2xl mx-auto">
               <h2 className="text-sm font-black tracking-[0.3em] text-blue-500 uppercase mb-4">Service Palette</h2>
               <h3 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight">
                 AI × 実務支援の<br />
                 フルスレッド・ソリューション
               </h3>
             </div>
-            <p className="text-slate-500 font-medium text-sm border-l-2 border-blue-500 pl-6 py-2">
+            <p className="text-slate-500 font-medium text-sm mt-6 max-w-2xl mx-auto">
               戦略立案(AI)から制作(Studio)、集客(Ad/Base)、<br />
               信頼構築(Trust)までをワンストップで。
             </p>
