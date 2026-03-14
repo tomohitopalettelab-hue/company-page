@@ -20,7 +20,7 @@ const questions = [
   },
   {
     label: "集客",
-    q: "ネットからのお客さんが増えず、何をどう改善すればいいか五里霧中だ。",
+    q: "ネットからのお客さんが増えず、何をどう改善すればいいかわからない。",
     service: "Pal-Opt / Ad",
     path: "/solution/pal_opt",
     color: "#F39800",
