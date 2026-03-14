@@ -14,6 +14,14 @@ interface NewsProps {
     date: string;
     title: string;
   };
+  works: {
+    id: string;
+    slug: string;
+    title: string;
+    category: string;
+    coverUrl: string;
+    publishedAt: string;
+  }[];
 }
 
 // 統合されたサービスデータ
@@ -108,7 +116,7 @@ const unifiedServices = [
   },
 ];
 
-export default function PaletteLab({ latestNews }: NewsProps) {
+export default function PaletteLab({ latestNews, works }: NewsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -272,11 +280,8 @@ export default function PaletteLab({ latestNews }: NewsProps) {
                 <h4 className="text-3xl md:text-4xl font-black mb-6">すべてのサービスは<br /><span className="text-blue-400">AI</span>で繋がる。</h4>
                 <p className="text-slate-400 leading-relaxed mb-8">
                   Palette AIが各施策のデータを学習し、Palette Consoleを通じて次の一手を提示。
-                  制作、広告、接客のすべてが、共通の意志を持って動くエコシステムを提供します。
+                  制作、広告、改善のすべてが、共通の意志を持って動くシステムを提供します。
                 </p>
-                <Link href="/ecosystem" className="inline-flex items-center gap-2 text-sm font-bold border-b border-blue-500 pb-1 hover:text-blue-400 transition-colors">
-                  システム間連携について詳しく <ArrowRight size={14} />
-                </Link>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {[
@@ -294,6 +299,65 @@ export default function PaletteLab({ latestNews }: NewsProps) {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* --- WORKS (実績紹介) --- */}
+      <section className="relative z-10 py-28 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-between flex-wrap gap-6 mb-10">
+            <div>
+              <h2 className="text-sm font-black tracking-[0.3em] text-slate-400 uppercase mb-4">Works</h2>
+              <h3 className="text-3xl md:text-4xl font-black text-slate-900">実績紹介</h3>
+              <p className="text-slate-500 text-sm mt-4">
+                投稿から「実績紹介」カテゴリのみ抜粋しています。
+              </p>
+            </div>
+            <Link href="/works" className="inline-flex items-center gap-2 text-sm font-black text-slate-900 border-b border-slate-300 pb-1 hover:border-blue-600 hover:text-blue-600 transition-colors">
+              すべて見る <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          {works.length === 0 ? (
+            <div className="rounded-[32px] border border-slate-100 bg-slate-50 p-10 text-center text-sm text-slate-500">
+              まだ実績紹介の投稿がありません。
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {works.map((work) => (
+                <Link
+                  key={work.id}
+                  href={`/works/${work.slug}`}
+                  className="group rounded-[28px] bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all overflow-hidden"
+                >
+                  <div className="h-44 bg-slate-100 overflow-hidden">
+                    {work.coverUrl ? (
+                      <Image
+                        src={work.coverUrl}
+                        alt={work.title}
+                        width={800}
+                        height={450}
+                        className="h-full w-full object-cover group-hover:scale-[1.02] transition-transform"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-gradient-to-br from-blue-50 via-white to-emerald-50" />
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">
+                      {work.category}
+                    </span>
+                    <h4 className="mt-3 text-lg font-black text-slate-900 group-hover:text-blue-600 transition-colors">
+                      {work.title}
+                    </h4>
+                    <p className="mt-2 text-xs text-slate-500">
+                      {new Date(work.publishedAt).toLocaleDateString("ja-JP").replace(/\//g, ".")}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

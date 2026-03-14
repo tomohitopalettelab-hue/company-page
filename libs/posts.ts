@@ -28,6 +28,18 @@ export async function getPublishedPosts(limit = 50) {
   return result.rows;
 }
 
+export async function getPublishedPostsByCategory(category: string, limit = 12) {
+  await ensurePostsTable();
+  const result = await sql<PostRecord>`
+    SELECT * FROM posts
+    WHERE status = 'published'
+      AND category = ${category}
+    ORDER BY published_at DESC NULLS LAST
+    LIMIT ${limit};
+  `;
+  return result.rows;
+}
+
 export async function getPostBySlug(slug: string) {
   await ensurePostsTable();
   const result = await sql<PostRecord>`

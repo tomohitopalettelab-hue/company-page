@@ -1,9 +1,10 @@
 import PaletteLabClient from "./PaletteLabClient";
-import { getPublishedPosts } from "@/libs/posts";
+import { getPublishedPosts, getPublishedPostsByCategory } from "@/libs/posts";
 
 export default async function Home() {
   try {
     const posts = await getPublishedPosts(1);
+    const workPosts = await getPublishedPostsByCategory("実績紹介", 6);
     const latest = posts[0];
 
     const latestNews = latest
@@ -18,9 +19,23 @@ export default async function Home() {
           title: "ニュースがありません",
         };
 
-    return <PaletteLabClient latestNews={latestNews} />;
+    const works = workPosts.map((item) => ({
+      id: item.id,
+      slug: item.slug,
+      title: item.title,
+      category: item.category || "実績紹介",
+      coverUrl: item.cover_url || "",
+      publishedAt: item.published_at || item.created_at,
+    }));
+
+    return <PaletteLabClient latestNews={latestNews} works={works} />;
   } catch (error) {
     console.error("Data fetch error:", error);
-    return <PaletteLabClient latestNews={{ date: "---", title: "お知らせを取得できませんでした" }} />;
+    return (
+      <PaletteLabClient
+        latestNews={{ date: "---", title: "お知らせを取得できませんでした" }}
+        works={[]}
+      />
+    );
   }
 }
