@@ -4,6 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { getWorkBySlug } from "@/libs/works";
 
+export const dynamic = "force-dynamic";
+
 const splitLines = (value: string | null) =>
   String(value || "")
     .split(/\n+/)

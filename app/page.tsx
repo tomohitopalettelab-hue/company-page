@@ -2,6 +2,8 @@ import PaletteLabClient from "./PaletteLabClient";
 import { getPublishedPosts } from "@/libs/posts";
 import { getPublishedWorks } from "@/libs/works";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   try {
     const posts = await getPublishedPosts(1);
