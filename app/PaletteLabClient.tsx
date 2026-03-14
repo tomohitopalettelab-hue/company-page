@@ -207,12 +207,9 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
           <div className="inline-block px-4 py-1.5 mb-8 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] font-black tracking-[0.2em] uppercase">
             Data Driven & Creative Agency
           </div>
-          <h1
-            className="w-full text-5xl md:text-8xl font-black text-slate-900 leading-[1.05] tracking-tighter mb-10 text-center flex flex-col items-center"
-            style={{ textAlign: "center" }}
-          >
-            <span className="block text-center" style={{ textAlign: "center" }}>ビジネスの想いを</span>
-            <span className="block text-center text-gradient" style={{ textAlign: "center" }}>鮮やかに色付ける。</span>
+          <h1 className="w-full text-5xl md:text-8xl font-black text-slate-900 leading-[1.05] tracking-tighter mb-10">
+            <span className="block w-fit mx-auto">ビジネスの想いを</span>
+            <span className="block w-fit mx-auto text-gradient">鮮やかに色付ける</span>
           </h1>
           <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed text-center">
             Palette Labは、AI分析と最高峰のデザインを掛け合わせ、<br className="hidden md:block" />
