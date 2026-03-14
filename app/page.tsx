@@ -1,10 +1,11 @@
 import PaletteLabClient from "./PaletteLabClient";
-import { getPublishedPosts, getPublishedPostsByCategory } from "@/libs/posts";
+import { getPublishedPosts } from "@/libs/posts";
+import { getPublishedWorks } from "@/libs/works";
 
 export default async function Home() {
   try {
     const posts = await getPublishedPosts(1);
-    const workPosts = await getPublishedPostsByCategory("実績紹介", 6);
+    const workPosts = await getPublishedWorks(6);
     const latest = posts[0];
 
     const latestNews = latest
@@ -23,7 +24,7 @@ export default async function Home() {
       id: item.id,
       slug: item.slug,
       title: item.title,
-      category: item.category || "実績紹介",
+      category: item.service || item.category || "実績紹介",
       coverUrl: item.cover_url || "",
       publishedAt: item.published_at || item.created_at,
     }));

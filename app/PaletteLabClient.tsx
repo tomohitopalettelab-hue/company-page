@@ -310,7 +310,7 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
               <h2 className="text-sm font-black tracking-[0.3em] text-slate-400 uppercase mb-4">Works</h2>
               <h3 className="text-3xl md:text-4xl font-black text-slate-900">実績紹介</h3>
               <p className="text-slate-500 text-sm mt-4">
-                投稿から「実績紹介」カテゴリのみ抜粋しています。
+                様々な業種・規模の事例を掲載しています。
               </p>
             </div>
             <Link href="/works" className="inline-flex items-center gap-2 text-sm font-black text-slate-900 border-b border-slate-300 pb-1 hover:border-blue-600 hover:text-blue-600 transition-colors">

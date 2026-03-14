@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 
 const filters = [
   { key: "all", label: "すべて" },
@@ -12,52 +13,23 @@ const filters = [
   { key: "orange", label: "広告配信" },
 ];
 
-const works = [
-  {
-    id: "studio-01",
-    slug: "studio-01",
-    category: "turquoise",
-    service: "Pal-Studio",
-    title: "〇〇株式会社様 コーポレートサイト",
-    desc: "ビジョンを形にしたモダンなデザインで成約率が2倍に向上。",
-    tagClass: "tag-turquoise",
-  },
-  {
-    id: "trust-01",
-    slug: "trust-01",
-    category: "gold",
-    service: "Pal-Trust",
-    title: "飲食店△△様 口コミ改善",
-    desc: "星3.2から4.5へ改善。新規来店数が大幅にアップしました。",
-    tagClass: "tag-gold",
-  },
-  {
-    id: "ad-01",
-    slug: "ad-01",
-    category: "orange",
-    service: "Pal-Ad",
-    title: "美容室□□様 広告運用",
-    desc: "月間20件の新規予約を安定して獲得する仕組みを構築。",
-    tagClass: "tag-orange",
-  },
-  {
-    id: "base-01",
-    slug: "base-01",
-    category: "lime",
-    service: "Pal-Base",
-    title: "整骨院◇◇様 地域集客",
-    desc: "LINE導線の改善でリピート率が大幅に向上。",
-    tagClass: "tag-lime",
-  },
-];
+type WorkItem = {
+  id: string;
+  slug: string;
+  category: string;
+  service: string;
+  title: string;
+  desc: string;
+  coverUrl: string;
+};
 
-export default function WorksClient() {
+export default function WorksClient({ works }: { works: WorkItem[] }) {
   const [activeFilter, setActiveFilter] = useState("all");
 
   const filteredWorks = useMemo(() => {
     if (activeFilter === "all") return works;
     return works.filter((item) => item.category === activeFilter);
-  }, [activeFilter]);
+  }, [activeFilter, works]);
 
   return (
     <main className="min-h-screen bg-[#F9F9F9] px-6 pb-24 pt-24 text-slate-900">
@@ -175,9 +147,19 @@ export default function WorksClient() {
         <div className="mt-10 works-grid">
           {filteredWorks.map((work) => (
             <Link key={work.id} href={`/works/${work.slug}`} className="work-item">
-              <div className="thumb" />
+              <div className="thumb">
+                {work.coverUrl ? (
+                  <Image
+                    src={work.coverUrl}
+                    alt={work.title}
+                    width={900}
+                    height={600}
+                    className="h-full w-full object-cover"
+                  />
+                ) : null}
+              </div>
               <div className="info">
-                <span className={`category-tag ${work.tagClass}`}>{work.service}</span>
+                <span className={`category-tag tag-${work.category || "white"}`}>{work.service || "Works"}</span>
                 <div className="work-title">{work.title}</div>
                 <div className="work-desc">{work.desc}</div>
               </div>

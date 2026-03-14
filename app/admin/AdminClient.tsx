@@ -6,6 +6,8 @@ import { Bot, Grid3X3, ImageIcon, Loader2, LogOut, Plus, Search, Trash2, Upload,
 
 type PostStatus = "draft" | "published";
 
+type ContentType = "news" | "works";
+
 type PostItem = {
   id: string;
   slug: string;
@@ -21,6 +23,15 @@ type PostItem = {
   status: PostStatus;
   publishedAt: string;
   isNew: boolean;
+  clientName: string;
+  industry: string;
+  duration: string;
+  service: string;
+  challenge: string;
+  solution: string;
+  results: string;
+  testimonial: string;
+  metrics: string;
 };
 
 type AuthState = "loading" | "login" | "dashboard";
@@ -59,7 +70,7 @@ const toIsoFromLocal = (value: string): string => {
   return date.toISOString();
 };
 
-const createNewPost = (): PostItem => {
+const createNewPost = (contentType: ContentType): PostItem => {
   const now = new Date().toISOString();
   return {
     id: `new-${Date.now()}`,
@@ -68,7 +79,7 @@ const createNewPost = (): PostItem => {
     title: "",
     body: "",
     bodyText: "",
-    category: "",
+    category: contentType === "works" ? "turquoise" : "",
     keywords: "",
     coverUrl: "",
     excerpt: "",
@@ -76,6 +87,15 @@ const createNewPost = (): PostItem => {
     status: "published",
     publishedAt: now,
     isNew: true,
+    clientName: "",
+    industry: "",
+    duration: "",
+    service: "",
+    challenge: "",
+    solution: "",
+    results: "",
+    testimonial: "",
+    metrics: "",
   };
 };
 
@@ -104,8 +124,37 @@ const dbRecordToPostItem = (record: Record<string, unknown>): PostItem => {
     status: record.status === "published" ? "published" : "draft",
     publishedAt: String(record.published_at || new Date().toISOString()),
     isNew: false,
+    clientName: String(record.client_name || ""),
+    industry: String(record.industry || ""),
+    duration: String(record.duration || ""),
+    service: String(record.service || ""),
+    challenge: String(record.challenge || ""),
+    solution: String(record.solution || ""),
+    results: String(record.results || ""),
+    testimonial: String(record.testimonial || ""),
+    metrics: String(record.metrics || ""),
   };
 };
+
+const workCategoryOptions = [
+  { value: "turquoise", label: "HP制作" },
+  { value: "gold", label: "口コミ管理" },
+  { value: "lime", label: "地域集客" },
+  { value: "orange", label: "広告配信" },
+  { value: "coral", label: "動画制作" },
+  { value: "magenta", label: "SNS運用" },
+];
+
+const workServiceOptions = [
+  "Palette AI",
+  "Palette Console",
+  "Pal-Studio",
+  "Pal-Video",
+  "Pal-Base",
+  "Pal-Trust",
+  "Pal-Opt",
+  "Pal-Ad",
+];
 
 // ---- ログイン画面 ----
 
@@ -227,6 +276,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
 
 export default function AdminClient() {
   const [authState, setAuthState] = useState<AuthState>("loading");
+  const [contentType, setContentType] = useState<ContentType>("news");
   const [posts, setPosts] = useState<PostItem[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -260,8 +310,9 @@ export default function AdminClient() {
 
   // ---- 認証チェック ----
 
-  const fetchPosts = async () => {
-    const res = await fetch("/api/admin/posts", { cache: "no-store", credentials: "include" });
+  const fetchPosts = async (type: ContentType) => {
+    const baseUrl = type === "works" ? "/api/admin/works" : "/api/admin/posts";
+    const res = await fetch(baseUrl, { cache: "no-store", credentials: "include" });
     if (res.status === 401) {
       setAuthState("login");
       return;
@@ -276,12 +327,12 @@ export default function AdminClient() {
   };
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(contentType);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [contentType]);
 
   const handleLogin = async () => {
-    await fetchPosts();
+    await fetchPosts(contentType);
   };
 
   const handleLogout = async () => {
@@ -335,7 +386,7 @@ export default function AdminClient() {
   };
 
   const handleCreatePost = () => {
-    const next = createNewPost();
+    const next = createNewPost(contentType);
     setPosts((prev) => [next, ...prev]);
     setSelectedId(next.id);
     setError("");
@@ -354,7 +405,8 @@ export default function AdminClient() {
     setIsDeleting(true);
     setError("");
     try {
-      const res = await fetch(`/api/admin/posts/${selected.id}`, {
+      const baseUrl = contentType === "works" ? "/api/admin/works" : "/api/admin/posts";
+      const res = await fetch(`${baseUrl}/${selected.id}`, {
         method: "DELETE",
         credentials: "include",
       });
@@ -378,7 +430,7 @@ export default function AdminClient() {
     setIsSaving(true);
     setError("");
 
-    const payload = {
+    const payloadBase = {
       title: selected.title,
       body: textToHtml(selected.bodyText),
       category: selected.category || null,
@@ -393,9 +445,26 @@ export default function AdminClient() {
       slug: selected.slug,
     };
 
+    const payload =
+      contentType === "works"
+        ? {
+            ...payloadBase,
+            clientName: selected.clientName || null,
+            industry: selected.industry || null,
+            duration: selected.duration || null,
+            service: selected.service || null,
+            challenge: selected.challenge || null,
+            solution: selected.solution || null,
+            results: selected.results || null,
+            testimonial: selected.testimonial || null,
+            metrics: selected.metrics || null,
+          }
+        : payloadBase;
+
     try {
       if (selected.isNew) {
-        const res = await fetch("/api/admin/posts", {
+        const baseUrl = contentType === "works" ? "/api/admin/works" : "/api/admin/posts";
+        const res = await fetch(baseUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -413,7 +482,8 @@ export default function AdminClient() {
         );
         setSelectedId(id);
       } else {
-        const res = await fetch(`/api/admin/posts/${selected.id}`, {
+        const baseUrl = contentType === "works" ? "/api/admin/works" : "/api/admin/posts";
+        const res = await fetch(`${baseUrl}/${selected.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -542,14 +612,34 @@ export default function AdminClient() {
             <Image src="/palette-lab-logo.png" alt="Palette Lab" width={140} height={42} className="h-8 w-auto" />
             <div className="w-px h-6 bg-slate-200" />
             <div>
-              <h1 className="text-xl font-black text-slate-900 tracking-tight">記事投稿</h1>
+              <h1 className="text-xl font-black text-slate-900 tracking-tight">投稿管理</h1>
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Admin Dashboard</p>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-3">
+            <div className="flex items-center gap-2 rounded-2xl border border-slate-100 bg-white/60 p-1">
+              <button
+                type="button"
+                onClick={() => { setContentType("news"); setSelectedId(null); setPosts([]); }}
+                className={`px-4 py-2 text-xs font-black rounded-2xl transition-all ${
+                  contentType === "news" ? "bg-slate-900 text-white" : "text-slate-400 hover:text-slate-700"
+                }`}
+              >
+                ニュース
+              </button>
+              <button
+                type="button"
+                onClick={() => { setContentType("works"); setSelectedId(null); setPosts([]); }}
+                className={`px-4 py-2 text-xs font-black rounded-2xl transition-all ${
+                  contentType === "works" ? "bg-slate-900 text-white" : "text-slate-400 hover:text-slate-700"
+                }`}
+              >
+                実績紹介
+              </button>
+            </div>
             <a
-              href="/news"
+              href={contentType === "works" ? "/works" : "/news"}
               className="px-5 py-3 text-sm font-bold rounded-2xl border border-slate-100 bg-white/50 text-slate-600 hover:bg-white hover:shadow-md transition-all"
             >
               公開ページを見る
@@ -590,7 +680,9 @@ export default function AdminClient() {
           <aside>
             <div className="bg-white/70 backdrop-blur-md rounded-[2rem] border border-white shadow-sm overflow-hidden">
               <div className="px-6 py-4 border-b border-slate-50 flex items-center justify-between">
-                <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">記事一覧</h2>
+                <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">
+                  {contentType === "works" ? "実績一覧" : "記事一覧"}
+                </h2>
                 <span className="text-[10px] font-black bg-blue-50 text-blue-500 px-2 py-0.5 rounded-full">
                   {posts.length}
                 </span>
@@ -628,7 +720,7 @@ export default function AdminClient() {
                           </span>
                         </div>
                         <p className="text-[10px] text-slate-300 font-mono truncate uppercase">
-                          {post.category || "—"} / {post.slug || "未設定"}
+                          {(contentType === "works" ? post.service || post.category : post.category) || "—"} / {post.slug || "未設定"}
                         </p>
                       </button>
                     ))}
@@ -648,8 +740,8 @@ export default function AdminClient() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-slate-900 font-black">記事が選択されていません</h3>
-                  <p className="text-sm text-slate-400 mt-1">左のリストから編集したい記事を選んでください。</p>
+                  <h3 className="text-slate-900 font-black">投稿が選択されていません</h3>
+                  <p className="text-sm text-slate-400 mt-1">左のリストから編集したい投稿を選んでください。</p>
                 </div>
               </div>
             ) : (
@@ -658,7 +750,7 @@ export default function AdminClient() {
                   <div>
                     <h2 className="text-xl font-black text-slate-900">コンテンツ編集</h2>
                     <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">
-                      {selected.category || "記事"} 編集
+                      {(contentType === "works" ? "実績紹介" : selected.category || "記事")} 編集
                     </p>
                   </div>
                   <button
@@ -706,16 +798,27 @@ export default function AdminClient() {
                   {/* カテゴリ + 公開状態 + 公開日時 */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-2">
-                      <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">カテゴリ</label>
+                      <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                        {contentType === "works" ? "表示カテゴリ" : "カテゴリ"}
+                      </label>
                       <select
                         value={selected.category}
                         onChange={(e) => updateSelected({ category: e.target.value })}
                         className="w-full appearance-none px-5 py-4 bg-slate-50/50 border border-slate-100 rounded-[1.25rem] text-sm font-bold text-slate-700 focus:bg-white focus:ring-4 focus:ring-blue-50 focus:border-blue-400 outline-none transition-all cursor-pointer"
                       >
                         <option value="">カテゴリを選択...</option>
-                        <option value="ニュース">ニュース</option>
-                        <option value="ブログ">ブログ</option>
-                        <option value="実績紹介">実績紹介</option>
+                        {contentType === "works" ? (
+                          workCategoryOptions.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </option>
+                          ))
+                        ) : (
+                          <>
+                            <option value="ニュース">ニュース</option>
+                            <option value="ブログ">ブログ</option>
+                          </>
+                        )}
                       </select>
                     </div>
                     <div className="space-y-2">
@@ -974,6 +1077,110 @@ export default function AdminClient() {
                       placeholder="記事の要点を短くまとめてください..."
                     />
                   </div>
+
+                  {contentType === "works" && (
+                    <div className="space-y-8">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">クライアント名</label>
+                          <input
+                            value={selected.clientName}
+                            onChange={(e) => updateSelected({ clientName: e.target.value })}
+                            className="w-full px-5 py-4 bg-slate-50/50 border border-slate-100 rounded-[1.25rem] text-sm text-slate-700 outline-none focus:bg-white focus:border-blue-400 transition-all"
+                            placeholder="例: 〇〇株式会社"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">業種</label>
+                          <input
+                            value={selected.industry}
+                            onChange={(e) => updateSelected({ industry: e.target.value })}
+                            className="w-full px-5 py-4 bg-slate-50/50 border border-slate-100 rounded-[1.25rem] text-sm text-slate-700 outline-none focus:bg-white focus:border-blue-400 transition-all"
+                            placeholder="例: 飲食・サービス"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">施策期間</label>
+                          <input
+                            value={selected.duration}
+                            onChange={(e) => updateSelected({ duration: e.target.value })}
+                            className="w-full px-5 py-4 bg-slate-50/50 border border-slate-100 rounded-[1.25rem] text-sm text-slate-700 outline-none focus:bg-white focus:border-blue-400 transition-all"
+                            placeholder="例: 3ヶ月"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">担当サービス</label>
+                          <select
+                            value={selected.service}
+                            onChange={(e) => updateSelected({ service: e.target.value })}
+                            className="w-full appearance-none px-5 py-4 bg-slate-50/50 border border-slate-100 rounded-[1.25rem] text-sm font-bold text-slate-700 focus:bg-white focus:ring-4 focus:ring-blue-50 focus:border-blue-400 outline-none transition-all cursor-pointer"
+                          >
+                            <option value="">サービスを選択...</option>
+                            {workServiceOptions.map((service) => (
+                              <option key={service} value={service}>
+                                {service}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">課題</label>
+                        <textarea
+                          value={selected.challenge}
+                          onChange={(e) => updateSelected({ challenge: e.target.value })}
+                          rows={3}
+                          className="w-full px-6 py-5 bg-white border border-slate-100 rounded-[1.5rem] text-[14px] leading-relaxed text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-400 transition-all outline-none"
+                          placeholder="例: 集客導線が分散し、広告費対効果が見えづらい状態"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">施策内容</label>
+                        <textarea
+                          value={selected.solution}
+                          onChange={(e) => updateSelected({ solution: e.target.value })}
+                          rows={4}
+                          className="w-full px-6 py-5 bg-white border border-slate-100 rounded-[1.5rem] text-[14px] leading-relaxed text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-400 transition-all outline-none"
+                          placeholder="1行に1施策ずつ入力してください"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">成果</label>
+                        <textarea
+                          value={selected.results}
+                          onChange={(e) => updateSelected({ results: e.target.value })}
+                          rows={3}
+                          className="w-full px-6 py-5 bg-white border border-slate-100 rounded-[1.5rem] text-[14px] leading-relaxed text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-400 transition-all outline-none"
+                          placeholder="例: 新規予約が増加し、口コミ評価も改善"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">お客様の声</label>
+                        <textarea
+                          value={selected.testimonial}
+                          onChange={(e) => updateSelected({ testimonial: e.target.value })}
+                          rows={3}
+                          className="w-full px-6 py-5 bg-white border border-slate-100 rounded-[1.5rem] text-[14px] leading-relaxed text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-400 transition-all outline-none"
+                          placeholder="例: 成果が数字で見えるので意思決定が早くなった"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">成果指標</label>
+                        <textarea
+                          value={selected.metrics}
+                          onChange={(e) => updateSelected({ metrics: e.target.value })}
+                          rows={3}
+                          className="w-full px-6 py-5 bg-white border border-slate-100 rounded-[1.5rem] text-[14px] leading-relaxed text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-400 transition-all outline-none"
+                          placeholder="例: 新規予約 | +42%\n例: 口コミ評価 | 3.2 → 4.5"
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   {/* 本文 */}
                   <div className="space-y-3">
