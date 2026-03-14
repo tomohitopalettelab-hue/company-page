@@ -135,13 +135,22 @@ export default function PaletteConsolePage() {
          <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 tracking-tighter">
            データ活用を、日常へ。
          </h2>
-         <Link 
-            href="/contact"
-            className="inline-flex items-center gap-3 px-12 py-6 bg-slate-900 rounded-full font-black text-white hover:bg-blue-600 transition-all hover:scale-105"
-         >
-           デモ画面をリクエストする
-           <ChevronRight size={20} />
-         </Link>
+         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+           <Link 
+              href="/contact"
+              className="inline-flex items-center gap-3 px-12 py-6 bg-slate-900 rounded-full font-black text-white hover:bg-blue-600 transition-all hover:scale-105"
+           >
+             デモ画面をリクエストする
+             <ChevronRight size={20} />
+           </Link>
+            <Link 
+              href="/diagnosis"
+              className="inline-flex items-center gap-3 px-12 py-6 rounded-full font-black text-white bg-gradient-to-r from-[#00B7CE] via-[#2DD4BF] to-[#38BDF8] shadow-xl shadow-cyan-200/70 hover:brightness-110 transition-all"
+            >
+             無料診断を試す
+             <ChevronRight size={20} />
+           </Link>
+         </div>
       </section>
     </main>
   );

@@ -44,6 +44,12 @@ export default function PalTrustPage() {
                 >
                   導入の相談をする <ChevronRight size={18} />
                 </Link>
+                <Link 
+                  href="/diagnosis"
+                  className="px-8 py-4 rounded-full font-black text-white bg-gradient-to-r from-[#00B7CE] via-[#2DD4BF] to-[#38BDF8] shadow-lg shadow-cyan-200/70 hover:brightness-110 transition-all flex items-center gap-2"
+                >
+                  無料診断を試す <ChevronRight size={18} />
+                </Link>
               </div>
             </div>
 
@@ -179,13 +185,22 @@ export default function PalTrustPage() {
           <p className="text-slate-500 text-xl font-medium mb-12">
             お客様の「ありがとう」を逃さず、ブランドの資産に変えましょう。
           </p>
-          <Link 
-            href="/contact"
-            className="inline-flex items-center gap-4 px-12 py-6 bg-[#F9C11C] rounded-full font-black text-white hover:brightness-110 transition-all hover:scale-110 shadow-2xl shadow-[#F9C11C]/30"
-          >
-            Pal-Trustの詳細・デモを依頼する
-            <ChevronRight size={20} />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link 
+              href="/contact"
+              className="inline-flex items-center gap-4 px-12 py-6 bg-[#F9C11C] rounded-full font-black text-white hover:brightness-110 transition-all hover:scale-110 shadow-2xl shadow-[#F9C11C]/30"
+            >
+              Pal-Trustの詳細・デモを依頼する
+              <ChevronRight size={20} />
+            </Link>
+            <Link 
+              href="/diagnosis"
+              className="inline-flex items-center gap-4 px-12 py-6 rounded-full font-black text-white bg-gradient-to-r from-[#00B7CE] via-[#2DD4BF] to-[#38BDF8] shadow-xl shadow-cyan-200/70 hover:brightness-110 transition-all"
+            >
+              無料診断を試す
+              <ChevronRight size={20} />
+            </Link>
+          </div>
         </div>
       </section>
     </main>

@@ -147,13 +147,22 @@ export default function PaletteAiPage() {
             <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
               AIと一緒に、<br />新しい事業の形を。
             </h2>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 px-12 py-6 bg-slate-900 rounded-full font-black text-white hover:bg-blue-600 hover:scale-105 transition-all shadow-xl shadow-slate-900/10"
-            >
-              無料相談を始める
-              <ChevronRight size={20} />
-            </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-3 px-12 py-6 bg-slate-900 rounded-full font-black text-white hover:bg-blue-600 hover:scale-105 transition-all shadow-xl shadow-slate-900/10"
+              >
+                無料相談を始める
+                <ChevronRight size={20} />
+              </Link>
+              <Link
+                href="/diagnosis"
+                className="inline-flex items-center gap-3 px-12 py-6 rounded-full font-black text-white bg-gradient-to-r from-[#00B7CE] via-[#2DD4BF] to-[#38BDF8] shadow-xl shadow-cyan-200/70 hover:brightness-110 transition-all"
+              >
+                無料診断を試す
+                <ChevronRight size={20} />
+              </Link>
+            </div>
           </div>
           {/* 背景の光 */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/10 rounded-full blur-[80px]" />

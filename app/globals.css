@@ -1,5 +1,9 @@
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+body {
+  scroll-behavior: auto;
 }
 
 @import "tailwindcss";
@@ -39,4 +43,66 @@ body {
 ::selection {
   background: rgba(59, 130, 246, 0.2);
   color: #1e40af;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.page-fade {
+  animation: pageFadeIn 280ms ease-out;
+  will-change: opacity, transform;
+}
+
+.route-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(248, 250, 252, 0.7);
+  backdrop-filter: blur(8px);
+}
+
+.route-loader-dots {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.route-loader-dots span {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  animation: dotWave 1.4s ease-in-out infinite;
+  animation-fill-mode: both;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18);
+}
+
+.route-loader-dots span:nth-child(1) { background: #00b7ce; animation-delay: -0.12s; }
+.route-loader-dots span:nth-child(2) { background: #2dd4bf; animation-delay: -0.24s; }
+.route-loader-dots span:nth-child(3) { background: #38bdf8; animation-delay: -0.36s; }
+.route-loader-dots span:nth-child(4) { background: #8cc63f; animation-delay: -0.48s; }
+.route-loader-dots span:nth-child(5) { background: #f9c11c; animation-delay: -0.6s; }
+.route-loader-dots span:nth-child(6) { background: #f39800; animation-delay: -0.72s; }
+.route-loader-dots span:nth-child(7) { background: #a62183; animation-delay: -0.84s; }
+.route-loader-dots span:nth-child(8) { background: #111111; animation-delay: -0.96s; }
+
+@keyframes dotWave {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
 }

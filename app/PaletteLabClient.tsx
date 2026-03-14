@@ -193,9 +193,12 @@ export default function PaletteLab({ latestNews }: NewsProps) {
             <button onClick={() => setIsModalOpen(true)} className="w-full sm:w-auto px-10 py-5 bg-slate-900 text-white font-bold rounded-[20px] hover:bg-blue-600 transition-all shadow-2xl shadow-blue-200 flex items-center justify-center gap-2 group">
               無料相談を予約する <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <a href="#services" className="w-full sm:w-auto px-10 py-5 bg-white text-slate-700 font-bold rounded-[20px] neo-shadow hover:neo-inset transition-all">
+            <Link href="/diagnosis" className="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-[#00B7CE] via-[#2DD4BF] to-[#38BDF8] text-white font-bold rounded-[20px] shadow-2xl shadow-cyan-200/70 hover:brightness-110 transition-all">
+              無料診断を試す
+            </Link>
+            <Link href="/solution" className="w-full sm:w-auto px-10 py-5 bg-white text-slate-700 font-bold rounded-[20px] neo-shadow hover:neo-inset transition-all">
               ソリューションを見る
-            </a>
+            </Link>
           </div>
         </motion.div>
       </header>
@@ -349,6 +352,10 @@ export default function PaletteLab({ latestNews }: NewsProps) {
                 <Link href="/contact" className="group relative w-full md:w-72 h-20 bg-slate-900 rounded-3xl flex items-center justify-center gap-4 text-white font-black text-lg shadow-xl shadow-slate-200 hover:bg-blue-600 hover:scale-[1.03] active:scale-95 transition-all overflow-hidden">
                   <Mail size={28} />
                   <span>フォームから送る</span>
+                </Link>
+                <Link href="/diagnosis" className="group relative w-full md:w-72 h-20 bg-gradient-to-r from-[#00B7CE] via-[#2DD4BF] to-[#38BDF8] rounded-3xl flex items-center justify-center gap-4 text-white font-black text-lg shadow-2xl shadow-cyan-200/70 hover:brightness-110 hover:scale-[1.03] active:scale-95 transition-all overflow-hidden">
+                  <Palette size={26} />
+                  <span>無料診断を試す</span>
                 </Link>
               </div>
               <p className="mt-10 text-xs font-bold text-slate-400 tracking-widest uppercase">*初回相談は完全無料です。お気軽にご連絡ください。</p>

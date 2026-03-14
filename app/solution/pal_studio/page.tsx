@@ -116,13 +116,22 @@ export default function PalStudioPage() {
             <h2 className="text-4xl md:text-7xl font-black text-slate-900 mb-12 tracking-tighter">
               あなたのビジョンを、<br />最高の形で。
             </h2>
-            <Link 
-              href="/contact"
-              className="inline-flex items-center gap-4 px-12 py-6 bg-[#00B7CE] rounded-full font-black text-white hover:bg-[#0096A8] transition-all hover:scale-105 shadow-2xl shadow-[#00B7CE]/30"
-            >
-              無料相談を始める
-              <ChevronRight size={20} />
-            </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link 
+                href="/contact"
+                className="inline-flex items-center gap-4 px-12 py-6 bg-[#00B7CE] rounded-full font-black text-white hover:bg-[#0096A8] transition-all hover:scale-105 shadow-2xl shadow-[#00B7CE]/30"
+              >
+                無料相談を始める
+                <ChevronRight size={20} />
+              </Link>
+              <Link 
+                href="/diagnosis"
+                className="inline-flex items-center gap-4 px-12 py-6 rounded-full font-black text-white bg-gradient-to-r from-[#00B7CE] via-[#2DD4BF] to-[#38BDF8] shadow-xl shadow-cyan-200/70 hover:brightness-110 transition-all"
+              >
+                無料診断を試す
+                <ChevronRight size={20} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
