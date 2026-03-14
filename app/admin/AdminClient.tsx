@@ -533,6 +533,46 @@ export default function AdminClient() {
     }
   };
 
+  const handleGenerateWorkAi = async () => {
+    if (!selected?.excerpt.trim()) {
+      setError("概要を入力してください");
+      return;
+    }
+    setIsAiLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/admin/ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          type: "works",
+          excerpt: selected.excerpt,
+          category: selected.category,
+          service: selected.service,
+          keywords: selected.keywords,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data?.error ?? "AI生成に失敗しました");
+      }
+      const data = await res.json();
+      updateSelected({
+        title: String(data.title || selected.title || ""),
+        challenge: String(data.challenge || ""),
+        solution: String(data.solution || ""),
+        results: String(data.results || ""),
+        testimonial: String(data.testimonial || ""),
+        metrics: String(data.metrics || ""),
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "AI生成に失敗しました");
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
+
   const addTag = (raw: string) => {
     const tag = raw.trim();
     if (!tag || !selected) return;
@@ -1067,8 +1107,21 @@ export default function AdminClient() {
                   </div>
 
                   {/* 概要 */}
-                  <div className="space-y-2">
-                    <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">概要（抜粋）</label>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between flex-wrap gap-3">
+                      <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest">概要（抜粋）</label>
+                      {contentType === "works" && (
+                        <button
+                          type="button"
+                          onClick={handleGenerateWorkAi}
+                          disabled={isAiLoading}
+                          className="inline-flex items-center gap-2 px-5 py-2 text-[11px] font-black rounded-full bg-white text-slate-700 border border-slate-100 hover:border-blue-200 hover:text-blue-600 transition-all disabled:opacity-40 shadow-sm"
+                        >
+                          {isAiLoading ? <Loader2 size={12} className="animate-spin" /> : <Bot size={12} />}
+                          概要からAI生成
+                        </button>
+                      )}
+                    </div>
                     <textarea
                       value={selected.excerpt}
                       onChange={(e) => updateSelected({ excerpt: e.target.value })}
