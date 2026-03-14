@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { Bot, Grid3X3, ImageIcon, Loader2, LogOut, Plus, Search, Trash2, Upload, Wand2 } from "lucide-react";
+import RichEditor from "./RichEditor";
 
 type PostStatus = "draft" | "published";
 
@@ -422,7 +423,7 @@ export default function AdminClient() {
 
   const handleSave = async () => {
     if (!selected) return;
-    if (!selected.title.trim() || !selected.bodyText.trim()) {
+    if (!selected.title.trim() || !htmlToText(selected.body).trim()) {
       setError("タイトルと本文は必須です");
       return;
     }
@@ -432,7 +433,7 @@ export default function AdminClient() {
 
     const payloadBase = {
       title: selected.title,
-      body: textToHtml(selected.bodyText),
+      body: selected.body,
       category: selected.category || null,
       keywords: selected.keywords || null,
       coverUrl: selected.coverUrl || null,
@@ -525,7 +526,7 @@ export default function AdminClient() {
       }
       const data = await res.json();
       const generatedHtml = String(data.body || "");
-      updateSelected({ body: generatedHtml, bodyText: htmlToText(generatedHtml) });
+      updateSelected({ body: generatedHtml });
     } catch (err) {
       setError(err instanceof Error ? err.message : "AI生成に失敗しました");
     } finally {
@@ -1249,15 +1250,9 @@ export default function AdminClient() {
                         AI生成
                       </button>
                     </div>
-                    <textarea
-                      value={selected.bodyText}
-                      onChange={(e) => {
-                        const nextText = e.target.value;
-                        updateSelected({ bodyText: nextText, body: textToHtml(nextText) });
-                      }}
-                      rows={16}
-                      className="w-full px-8 py-8 bg-white border border-slate-100 rounded-[2rem] text-[15px] leading-[1.8] text-slate-700 focus:ring-4 focus:ring-blue-50 focus:border-blue-400 transition-all outline-none"
-                      placeholder="本文を入力してください..."
+                    <RichEditor
+                      value={selected.body}
+                      onChange={(html) => updateSelected({ body: html })}
                     />
                   </div>
 
@@ -1298,7 +1293,7 @@ export default function AdminClient() {
                     <p className="text-[10px] text-slate-300 font-mono">/{selected.slug || "未設定"}</p>
                     <button
                       onClick={handleSave}
-                      disabled={isSaving || !selected.title.trim() || !selected.bodyText.trim()}
+                      disabled={isSaving || !selected.title.trim() || !htmlToText(selected.body).trim()}
                       className="px-8 py-3 text-sm font-black rounded-2xl bg-blue-600 text-white hover:bg-blue-700 shadow-[0_8px_20px_-4px_rgba(37,99,235,0.4)] transition-all disabled:opacity-50"
                     >
                       {isSaving ? "保存中..." : "変更を保存"}
