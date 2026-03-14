@@ -118,7 +118,6 @@ const unifiedServices = [
 
 export default function PaletteLab({ latestNews, works }: NewsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const heroImages = works.slice(0, 3).filter((work) => work.coverUrl);
 
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans overflow-x-hidden">
@@ -184,9 +183,19 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
         )}
       </AnimatePresence>
 
-      {/* --- HERO SECTION --- */}
-      <header className="relative z-10 pt-44 pb-24 px-6 text-center max-w-6xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-white via-[#F0F9FF] to-[#ECFEFF]" />
+        </div>
+
+        {/* --- HERO SECTION --- */}
+        <header className="relative z-10 pt-44 pb-24 px-6 text-center">
+        <motion.div
+          className="max-w-6xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
           <div className="inline-block px-4 py-1.5 mb-8 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] font-black tracking-[0.2em] uppercase">
             Data Driven & Creative Agency
           </div>
@@ -198,43 +207,6 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
             Palette Labは、AI分析と最高峰のデザインを掛け合わせ、<br className="hidden md:block" />
             あなたの事業が持つ固有の価値を「選ばれるブランド」へと昇華させます。
           </p>
-          <div className="max-w-5xl mx-auto mb-12">
-            <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-4">
-              <div className="relative h-56 md:h-72 rounded-[32px] overflow-hidden border border-white shadow-2xl shadow-blue-100">
-                {heroImages[0]?.coverUrl ? (
-                  <Image
-                    src={heroImages[0].coverUrl}
-                    alt={heroImages[0].title}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="h-full w-full bg-gradient-to-br from-blue-50 via-white to-emerald-50" />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/35 via-transparent to-transparent" />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                {[heroImages[1], heroImages[2]].map((item, index) => (
-                  <div key={index} className="relative h-28 md:h-32 rounded-[24px] overflow-hidden border border-white shadow-lg shadow-blue-100">
-                    {item?.coverUrl ? (
-                      <Image
-                        src={item.coverUrl}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="h-full w-full bg-gradient-to-br from-slate-50 via-white to-blue-50" />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
-                  </div>
-                ))}
-              </div>
-            </div>
-            <p className="mt-4 text-xs text-slate-400 font-medium tracking-wide">
-              最新の実績からビジュアルをピックアップしています。
-            </p>
-          </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button onClick={() => setIsModalOpen(true)} className="w-full sm:w-auto px-10 py-5 bg-slate-900 text-white font-bold rounded-[20px] hover:bg-blue-600 transition-all shadow-2xl shadow-blue-200 flex items-center justify-center gap-2 group">
               無料相談を予約する <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -247,15 +219,16 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
             </Link>
           </div>
         </motion.div>
-      </header>
+        </header>
 
-      {/* --- NEWS --- */}
-      <section className="relative z-10 max-w-4xl mx-auto px-6 mb-32">
-        <Link href="/news" className="flex items-center gap-6 p-5 rounded-3xl bg-white/40 border border-white/80 backdrop-blur-sm shadow-sm hover:bg-white transition-all group">
-          <span className="bg-blue-600 text-white text-[9px] px-3 py-1 rounded-full font-black tracking-tighter">LATEST</span>
-          <p className="text-sm text-slate-600 font-medium truncate">{latestNews.date} — {latestNews.title}</p>
-          <ArrowRight size={16} className="ml-auto text-slate-400 group-hover:translate-x-1 transition-transform" />
-        </Link>
+        {/* --- NEWS --- */}
+        <section className="relative z-10 max-w-4xl mx-auto px-6 pb-32">
+          <Link href="/news" className="flex items-center gap-6 p-5 rounded-3xl bg-white/40 border border-white/80 backdrop-blur-sm shadow-sm hover:bg-white transition-all group">
+            <span className="bg-blue-600 text-white text-[9px] px-3 py-1 rounded-full font-black tracking-tighter">LATEST</span>
+            <p className="text-sm text-slate-600 font-medium truncate">{latestNews.date} — {latestNews.title}</p>
+            <ArrowRight size={16} className="ml-auto text-slate-400 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </section>
       </section>
 
       {/* --- SERVICE SECTION (背景：淡いグレー) --- */}
