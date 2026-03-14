@@ -4,10 +4,10 @@ import { isAuthorized } from "./libs/auth";
 
 export const config = {
   // /api/admin/login と /api/admin/logout は除外（認証不要）
-  matcher: ["/api/admin/((?!login|logout).*)"]
+  matcher: ["/api/admin/((?!login|logout).*)"],
 };
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   if (isAuthorized(request)) {
     return NextResponse.next();
   }

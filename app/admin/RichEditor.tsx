@@ -61,7 +61,7 @@ export default function RichEditor({ value, onChange }: RichEditorProps) {
   useEffect(() => {
     if (!editor || editor.isDestroyed) return;
     if (editor.getHTML() !== value) {
-      editor.commands.setContent(value || "", false);
+      editor.commands.setContent(value || "", { emitUpdate: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
