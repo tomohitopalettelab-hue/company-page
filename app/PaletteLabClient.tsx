@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Monitor, MessageSquare, Video, Search, ArrowRight, CheckCircle2,
@@ -118,6 +119,11 @@ const unifiedServices = [
 
 export default function PaletteLab({ latestNews, works }: NewsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans overflow-x-hidden">
@@ -144,44 +150,46 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
 
       {/* --- BACKGROUND ART (Hero周辺のみ) --- */}
       <div className="absolute top-0 left-0 w-full h-[100vh] z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-100/40 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[10%] right-[-10%] w-[50%] h-[50%] bg-rose-100/30 rounded-full blur-[120px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/70" />
       </div>
 
       {/* --- CONTACT MODAL --- */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              onClick={() => setIsModalOpen(false)} className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" />
-            <motion.div initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative w-full max-w-md bg-white rounded-[40px] shadow-2xl p-10 overflow-hidden"
-            >
-              <button onClick={() => setIsModalOpen(false)} className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors">
-                <X size={24} />
-              </button>
-              <div className="text-center mb-8">
-                <h3 className="text-3xl font-black text-slate-900 mb-2">Contact</h3>
-                <p className="text-sm text-slate-500 font-medium tracking-wide">事業の「色」を共に創りましょう</p>
-              </div>
-              <div className="space-y-4">
-                <a href="https://line.me/R/ti/p/@your_id" target="_blank" className="flex items-center gap-5 p-5 rounded-[24px] bg-[#06C755] text-white hover:scale-[1.02] transition-all shadow-xl shadow-green-100">
-                  <MessageCircle fill="white" size={28} />
-                  <span className="font-bold text-lg">LINE公式アカウント</span>
-                </a>
-                <Link href="/contact" className="flex items-center gap-5 p-5 rounded-[24px] bg-slate-900 text-white hover:scale-[1.02] transition-all shadow-xl shadow-slate-200">
-                  <Mail size={28} />
-                  <span className="font-bold text-lg">お問い合わせフォーム</span>
-                </Link>
-                <a href="https://instagram.com/your_id" target="_blank" className="flex items-center gap-5 p-5 rounded-[24px] bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white hover:scale-[1.02] transition-all shadow-xl shadow-purple-100">
-                  <Instagram size={28} />
-                  <span className="font-bold text-lg">Instagram DM</span>
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      {isMounted && createPortal(
+        <AnimatePresence>
+          {isModalOpen && (
+            <div className="fixed inset-0 z-[500] flex items-center justify-center p-6">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                onClick={() => setIsModalOpen(false)} className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" />
+              <motion.div initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                className="relative w-full max-w-md max-h-[85vh] bg-white rounded-[40px] shadow-2xl p-10 overflow-y-auto"
+              >
+                <button onClick={() => setIsModalOpen(false)} className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors">
+                  <X size={24} />
+                </button>
+                <div className="text-center mb-8">
+                  <h3 className="text-3xl font-black text-slate-900 mb-2">Contact</h3>
+                  <p className="text-sm text-slate-500 font-medium tracking-wide">事業の「色」を共に創りましょう</p>
+                </div>
+                <div className="space-y-4">
+                  <a href="https://lin.ee/H0msODk" target="_blank" className="flex items-center gap-5 p-5 rounded-[24px] bg-[#06C755] text-white hover:scale-[1.02] transition-all shadow-xl shadow-green-100">
+                    <MessageCircle fill="white" size={28} />
+                    <span className="font-bold text-lg">LINE公式アカウント</span>
+                  </a>
+                  <Link href="/contact" className="flex items-center gap-5 p-5 rounded-[24px] bg-slate-900 text-white hover:scale-[1.02] transition-all shadow-xl shadow-slate-200">
+                    <Mail size={28} />
+                    <span className="font-bold text-lg">お問い合わせフォーム</span>
+                  </Link>
+                  <a href="https://www.instagram.com/palette_lab_marketing/" target="_blank" className="flex items-center gap-5 p-5 rounded-[24px] bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white hover:scale-[1.02] transition-all shadow-xl shadow-purple-100">
+                    <Instagram size={28} />
+                    <span className="font-bold text-lg">Instagram DM</span>
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
@@ -191,7 +199,7 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
         {/* --- HERO SECTION --- */}
         <header className="relative z-10 pt-44 pb-24 px-6 text-center">
         <motion.div
-          className="max-w-6xl mx-auto"
+          className="max-w-6xl mx-auto text-center flex flex-col items-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -199,9 +207,12 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
           <div className="inline-block px-4 py-1.5 mb-8 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] font-black tracking-[0.2em] uppercase">
             Data Driven & Creative Agency
           </div>
-          <h1 className="text-5xl md:text-8xl font-black text-slate-900 leading-[1.05] tracking-tighter mb-10 text-center">
-            ビジネスの想いを<br />
-            <span className="text-gradient">鮮やかに色付ける。</span>
+          <h1
+            className="w-full text-5xl md:text-8xl font-black text-slate-900 leading-[1.05] tracking-tighter mb-10 text-center flex flex-col items-center"
+            style={{ textAlign: "center" }}
+          >
+            <span className="block text-center" style={{ textAlign: "center" }}>ビジネスの想いを</span>
+            <span className="block text-center text-gradient" style={{ textAlign: "center" }}>鮮やかに色付ける。</span>
           </h1>
           <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed text-center">
             Palette Labは、AI分析と最高峰のデザインを掛け合わせ、<br className="hidden md:block" />
@@ -420,7 +431,7 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
                 Palette Labが、最適なテクノロジーとデザインで伴走いたします。
               </p>
               <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-                <a href="https://line.me/R/ti/p/@your_id" target="_blank" className="group relative w-full md:w-72 h-20 bg-[#06C755] rounded-3xl flex items-center justify-center gap-4 text-white font-black text-lg shadow-xl shadow-green-100 hover:scale-[1.03] active:scale-95 transition-all overflow-hidden">
+                <a href="https://lin.ee/H0msODk" target="_blank" className="group relative w-full md:w-72 h-20 bg-[#06C755] rounded-3xl flex items-center justify-center gap-4 text-white font-black text-lg shadow-xl shadow-green-100 hover:scale-[1.03] active:scale-95 transition-all overflow-hidden">
                   <MessageCircle fill="white" size={28} />
                   <span>LINEで相談する</span>
                 </a>
@@ -457,8 +468,8 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
                 兵庫県尼崎市を拠点に、全国のプロフェッショナルのデジタル活用を支援します。
               </p>
               <div className="flex gap-4">
-                <a href="#" className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all"><Instagram size={20} /></a>
-                <a href="#" className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-green-500 hover:bg-green-50 transition-all"><MessageCircle size={20} /></a>
+                <a href="https://www.instagram.com/palette_lab_marketing/" target="_blank" className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all"><Instagram size={20} /></a>
+                <a href="https://lin.ee/H0msODk" target="_blank" className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-green-500 hover:bg-green-50 transition-all"><MessageCircle size={20} /></a>
               </div>
             </div>
             <div>
