@@ -199,11 +199,11 @@ export default function PaletteLab({ latestNews, works }: NewsProps) {
           <div className="inline-block px-4 py-1.5 mb-8 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] font-black tracking-[0.2em] uppercase">
             Data Driven & Creative Agency
           </div>
-          <h1 className="text-5xl md:text-8xl font-black text-slate-900 leading-[1.05] tracking-tighter mb-10">
+          <h1 className="text-5xl md:text-8xl font-black text-slate-900 leading-[1.05] tracking-tighter mb-10 text-center">
             ビジネスの想いを<br />
             <span className="text-gradient">鮮やかに色付ける。</span>
           </h1>
-          <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+          <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed text-center">
             Palette Labは、AI分析と最高峰のデザインを掛け合わせ、<br className="hidden md:block" />
             あなたの事業が持つ固有の価値を「選ばれるブランド」へと昇華させます。
           </p>
