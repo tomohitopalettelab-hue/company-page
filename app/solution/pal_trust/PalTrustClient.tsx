@@ -64,13 +64,14 @@ export default function PalTrustClient() {
   };
 
   return (
-    <main className={`${notoSans.className} bg-gray-100 text-gray-900`}>
+    <main className={`${notoSans.className} bg-gray-100 text-gray-900 w-full`}>
       <style jsx global>{`
         html,
         body {
           font-family: "Noto Sans JP", sans-serif;
           overflow-x: hidden;
           background: #f3f4f6;
+          width: 100%;
         }
         :root {
           --nav-offset: 88px;
@@ -105,8 +106,9 @@ export default function PalTrustClient() {
           height: 100vh;
           overflow-y: scroll;
           overscroll-behavior: auto;
-          max-width: 64rem;
-          margin: 0 auto;
+          width: 100%;
+          max-width: none;
+          margin: 0;
         }
         .container::-webkit-scrollbar {
           display: none;
@@ -383,193 +385,6 @@ export default function PalTrustClient() {
 
       </div>
 
-      <footer className="bg-white border-t border-slate-100 pt-32 pb-12 px-6 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 mb-24">
-              <div className="lg:col-span-2">
-                <Image
-                  src="/palette-lab-logo.png"
-                  alt="Palette Lab"
-                  width={400}
-                  height={120}
-                  className="mb-8 h-12 w-auto object-contain"
-                />
-                <p className="text-slate-500 font-medium leading-relaxed max-w-sm mb-8">
-                  想いを色付け、価値を再定義する。<br />
-                  兵庫県尼崎市を拠点に、全国のプロフェッショナルのデジタル活用を支援します。
-                </p>
-                <div className="flex gap-4">
-                  <a
-                    href="https://www.instagram.com/palette_lab_marketing/"
-                    target="_blank"
-                    className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all"
-                    rel="noreferrer"
-                  >
-                    <Instagram size={20} />
-                  </a>
-                  <a
-                    href="https://lin.ee/H0msODk"
-                    target="_blank"
-                    className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-green-500 hover:bg-green-50 transition-all"
-                    rel="noreferrer"
-                  >
-                    <MessageCircle size={20} />
-                  </a>
-                </div>
-              </div>
-              <div>
-                <h5 className="text-xs font-black tracking-widest uppercase text-slate-900 mb-8">Solutions</h5>
-                <ul className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm font-bold text-slate-400">
-                  {solutionServices.map((service) => (
-                    <li key={service.slug}>
-                      <Link href={`/solution/${service.slug}`} className="hover:text-blue-600 transition-colors">
-                        {service.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h5 className="text-xs font-black tracking-widest uppercase text-slate-900 mb-8">Company</h5>
-                <ul className="space-y-4 text-sm font-bold text-slate-400">
-                  <li>
-                    <button
-                      onClick={() => {
-                        const modal = document.getElementById("tokusho-modal");
-                        if (modal) modal.style.display = "flex";
-                      }}
-                      className="hover:text-blue-600 transition-colors text-left"
-                    >
-                      特定商取引法
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => {
-                        const modal = document.getElementById("privacy-modal");
-                        if (modal) modal.style.display = "flex";
-                      }}
-                      className="hover:text-blue-600 transition-colors text-left"
-                    >
-                      Privacy Policy
-                    </button>
-                  </li>
-                  <li>
-                    <Link href="/contact" className="hover:text-blue-600 transition-colors">Contact</Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="text-center pt-12 border-t border-slate-50">
-              <p className="text-[10px] font-black tracking-widest text-slate-300 uppercase">© 2026 Palette Lab. All rights reserved.</p>
-            </div>
-          </div>
-
-          <div id="tokusho-modal" className="fixed inset-0 z-[300] hidden items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md">
-            <div className="bg-white w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-[40px] p-8 md:p-12 relative shadow-2xl">
-              <button
-                onClick={() => {
-                  const modal = document.getElementById("tokusho-modal");
-                  if (modal) modal.style.display = "none";
-                }}
-                className="absolute top-8 right-8 text-slate-400 hover:text-slate-900 transition-colors"
-              >
-                <X size={24} />
-              </button>
-              <h3 className="text-2xl font-black mb-10 border-b border-slate-100 pb-6">特定商取引法に基づく表記</h3>
-
-              <div className="space-y-10 text-[15px] text-slate-600">
-                <section>
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-2">事業者名</p>
-                  <p className="font-medium text-slate-700">Palette Lab</p>
-                </section>
-
-                <section>
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-2">運営責任者</p>
-                  <p className="font-medium text-slate-700">森重 澄</p>
-                </section>
-
-                <section>
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-2">所在地</p>
-                  <p className="font-medium text-slate-700 leading-relaxed">
-                    〒661-0972<br />
-                    兵庫県尼崎市小中島3-1-7
-                  </p>
-                </section>
-
-                <section>
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-2">電話番号</p>
-                  <p className="font-medium text-slate-700">070-2667-5457</p>
-                  <p className="text-xs text-slate-400 mt-1">※お問い合わせはメール、またはLINE公式アカウントよりお願いいたします。</p>
-                </section>
-
-                <section>
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-2">メールアドレス</p>
-                  <p className="font-medium text-slate-700">palette.lab.digital@gmail.com</p>
-                </section>
-
-                <section>
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-2">販売価格</p>
-                  <p className="font-medium text-slate-700">
-                    5,000円〜<br />
-                    ※各プロジェクトごとの個別見積もりに準じます。詳細はサービス紹介ページまたはお見積り書をご確認ください。
-                  </p>
-                </section>
-
-                <section>
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-2">代金の支払い時期・方法</p>
-                  <p className="font-medium text-slate-700 mb-2">【支払い方法】</p>
-                  <ul className="list-disc pl-5 space-y-1 mb-4">
-                    <li>銀行振込</li>
-                    <li>クレジットカード決済（Stripe経由）</li>
-                  </ul>
-                  <p className="font-medium text-slate-700 mb-2">【支払い時期】</p>
-                  <p className="font-medium text-slate-700">原則として、契約締結後、請求書発行から14日以内にお支払いいただきます。なお、継続サービスの場合は各月25日までのお支払いとなります。</p>
-                </section>
-
-                <section>
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-2">商品代金以外に必要な費用</p>
-                  <p className="font-medium text-slate-700">
-                    ・振込手数料（銀行振込の場合）<br />
-                    ・インターネット接続料金、通信料金（お客様のご負担となります）
-                  </p>
-                </section>
-
-                <section>
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-2">役務の提供時期</p>
-                  <p className="font-medium text-slate-700">
-                    お支払い確認後、打ち合わせにて決定したスケジュールに基づき提供を開始いたします。
-                  </p>
-                </section>
-
-                <section className="p-8 rounded-[32px] bg-slate-50 border border-slate-100">
-                  <p className="font-black text-slate-900 text-xs tracking-[0.2em] uppercase mb-3 text-center">キャンセル・返品について</p>
-                  <p className="font-medium text-slate-700 leading-relaxed italic text-sm">
-                    サービスの性質上、提供開始後のお客様都合による返品・交換・キャンセルはお受けできません。制作物の不具合に関しては、納品後30日以内であれば無償で修正対応をいたします。また、契約解除に関する詳細は、個別契約書の定めに従うものとします。
-                  </p>
-                </section>
-              </div>
-            </div>
-          </div>
-
-          <div id="privacy-modal" className="fixed inset-0 z-[300] hidden items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md">
-            <div className="bg-white w-full max-w-2xl rounded-[40px] p-10 relative">
-              <button
-                onClick={() => {
-                  const modal = document.getElementById("privacy-modal");
-                  if (modal) modal.style.display = "none";
-                }}
-                className="absolute top-8 right-8 text-slate-400 hover:text-slate-900 transition-colors"
-              >
-                <X size={24} />
-              </button>
-              <h3 className="text-2xl font-black mb-8 border-b border-slate-100 pb-4">Privacy Policy</h3>
-              <div className="text-sm text-slate-600 leading-relaxed">
-                <p>Palette Lab.（以下「当社」）は、提供するサービスにおける個人情報の取扱いについて適切に保護し、管理いたします。収集した情報はサービスの提供、改善、およびお問い合わせ対応の目的にのみ使用いたします。</p>
-              </div>
-            </div>
-          </div>
-      </footer>
     </main>
   );
 }
