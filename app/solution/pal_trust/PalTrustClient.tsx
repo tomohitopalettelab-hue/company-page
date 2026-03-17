@@ -368,16 +368,16 @@ export default function PalTrustClient() {
 
             <div className="flex flex-col gap-4">
               <Link
-                href="/contact"
+                href="/diagnosis"
                 className="px-10 py-5 bg-[#F9C11C] text-black rounded-full font-bold text-xl shadow-xl hover:shadow-2xl transition-all"
               >
-                無料で詳細資料をダウンロード
+                無料診断
               </Link>
               <Link
                 href="/contact"
                 className="px-10 py-5 bg-black text-white rounded-full font-bold text-xl shadow-xl hover:bg-gray-800 transition-all"
               >
-                オンライン個別相談を予約
+                お問い合わせ
               </Link>
             </div>
           </div>

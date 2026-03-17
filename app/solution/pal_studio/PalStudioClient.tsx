@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Noto_Sans_JP } from "next/font/google";
 import { useEffect, useState } from "react";
 
@@ -433,12 +434,18 @@ export default function PalStudioClient() {
             </p>
 
             <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <button className="px-10 py-5 bg-[#00B7CE] text-white rounded-full font-bold text-xl shadow-xl hover:brightness-110 transition-all hover:scale-105">
-                無料で詳細資料を請求
-              </button>
-              <button className="px-10 py-5 bg-white text-black rounded-full font-bold text-xl shadow-xl hover:bg-gray-100 transition-all hover:scale-105">
-                オンライン相談を予約
-              </button>
+              <Link
+                href="/diagnosis"
+                className="px-10 py-5 bg-[#00B7CE] text-white rounded-full font-bold text-xl shadow-xl hover:brightness-110 transition-all hover:scale-105"
+              >
+                無料診断
+              </Link>
+              <Link
+                href="/contact"
+                className="px-10 py-5 bg-white text-black rounded-full font-bold text-xl shadow-xl hover:bg-gray-100 transition-all hover:scale-105"
+              >
+                お問い合わせ
+              </Link>
             </div>
 
             <p className="mt-12 text-gray-600 text-sm">© 2026 Palette Lab. All rights reserved.</p>
