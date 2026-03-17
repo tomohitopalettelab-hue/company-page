@@ -4,9 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function NavBar() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   if (pathname.startsWith("/admin")) return null;
 
@@ -17,18 +23,62 @@ export default function NavBar() {
           <Image src="/palette-lab-logo.png" alt="Palette Lab" width={160} height={48} priority className="h-9 md:h-10 w-auto" />
         </Link>
         <div className="flex items-center gap-4 md:gap-10">
-          <details className="relative lg:hidden">
-            <summary className="list-none cursor-pointer p-2 rounded-xl bg-white/80 border border-slate-200 text-slate-700 hover:text-blue-600 transition-colors">
+          <details
+            className="relative lg:hidden"
+            open={menuOpen}
+            onToggle={(event) => setMenuOpen((event.currentTarget as HTMLDetailsElement).open)}
+          >
+            <summary
+              className="list-none cursor-pointer p-2 rounded-xl bg-white/80 border border-slate-200 text-slate-700 hover:text-blue-600 transition-colors"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((open) => !open)}
+            >
               <Menu size={20} />
             </summary>
             <div className="absolute right-0 mt-3 w-52 rounded-2xl border border-slate-100 bg-white/95 backdrop-blur-xl shadow-xl p-2">
-              <Link href="/news" className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors">News</Link>
-              <Link href="/works" className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors">Works</Link>
-              <Link href="/solution" className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors">Solutions</Link>
-              <Link href="/about" className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors">About</Link>
-              <Link href="/contact" className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors">Contact</Link>
+              <Link
+                href="/news"
+                className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                News
+              </Link>
+              <Link
+                href="/works"
+                className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Works
+              </Link>
+              <Link
+                href="/solution"
+                className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Solutions
+              </Link>
+              <Link
+                href="/about"
+                className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link
+                href="/contact"
+                className="block px-4 py-2.5 rounded-xl text-xs font-black tracking-widest text-slate-500 uppercase hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Contact
+              </Link>
               <div className="mt-2 border-t border-slate-100 pt-2">
-                <Link href="/diagnosis" className="block px-4 py-3 rounded-xl bg-gradient-to-r from-[#00B7CE] via-[#2DD4BF] to-[#38BDF8] text-white text-xs font-black tracking-widest uppercase text-center shadow-lg shadow-cyan-200/70 hover:brightness-110 transition-all">無料診断</Link>
+                <Link
+                  href="/diagnosis"
+                  className="block px-4 py-3 rounded-xl bg-gradient-to-r from-[#00B7CE] via-[#2DD4BF] to-[#38BDF8] text-white text-xs font-black tracking-widest uppercase text-center shadow-lg shadow-cyan-200/70 hover:brightness-110 transition-all"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  無料診断
+                </Link>
               </div>
             </div>
           </details>
