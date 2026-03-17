@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Noto_Sans_JP } from "next/font/google";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const notoSans = Noto_Sans_JP({
   weight: ["300", "400", "700"],
@@ -11,10 +11,6 @@ const notoSans = Noto_Sans_JP({
 });
 
 export default function PalStudioClient() {
-  const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [analysis, setAnalysis] = useState("");
-
   useEffect(() => {
     const sections = document.querySelectorAll("section");
     const observer = new IntersectionObserver(
@@ -32,47 +28,6 @@ export default function PalStudioClient() {
     return () => observer.disconnect();
   }, []);
 
-  const callGemini = async (prompt: string, systemInstruction = "") => {
-    const apiKey = "";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-    const payload = {
-      contents: [{ parts: [{ text: prompt }] }],
-      systemInstruction: { parts: [{ text: systemInstruction }] },
-    };
-
-    for (let i = 0; i < 5; i += 1) {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await response.json();
-        return data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "分析に失敗しました。";
-      } catch (_e) {
-        await new Promise((resolve) => setTimeout(resolve, Math.pow(2, i) * 1000));
-      }
-    }
-    return "リトライ上限に達しました。";
-  };
-
-  const analyzeSite = async () => {
-    if (!query.trim()) return;
-    setLoading(true);
-    setAnalysis("");
-
-    const systemPrompt = `あなたは『Pal-Studio』のWeb戦略コンサルタントです。
-入力されたURLまたは業種に対して、Web 3.0時代の「稼ぐHP」という観点から診断してください：
-1. その業種における「表示速度」と「離脱率」の相関（機会損失の予測）
-2. モバイルファースト設計に刷新した場合の問い合わせ率向上見込み
-3. Pal-Studioを導入してブログや実績を「中の人の言葉」で更新し続けた場合のブランディング効果
-を日本語で、構造化して簡潔に回答してください。`;
-
-    const res = await callGemini(`${query} のサイト改善案をシミュレーションしてください。`, systemPrompt);
-
-    setAnalysis(res);
-    setLoading(false);
-  };
 
   return (
     <main className={`${notoSans.className} bg-white text-gray-900`}>
@@ -280,45 +235,6 @@ export default function PalStudioClient() {
               <div className="bg-black/10 p-8 rounded-3xl border border-white/20">
                 <h4 className="font-bold mb-4 text-lg">24h営業マン</h4>
                 <p className="text-sm opacity-90 leading-relaxed">適切な導線設計により、寝ている間も問い合わせを獲り続ける。</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="slide bg-white">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4 gemini-gradient">AI Analysis for Strategy</h2>
-              <p className="text-gray-600">Gemini AIが現在のウェブサイトの「稼ぐ力」を客観的に診断します。</p>
-            </div>
-
-            <div className="bg-gray-100 p-8 rounded-[2.5rem] shadow-inner">
-              <div className="flex flex-col md:flex-row gap-4 mb-8">
-                <input
-                  type="text"
-                  placeholder="分析するサイトURLを入力"
-                  className="flex-1 px-6 py-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00B7CE]"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                />
-                <button
-                  onClick={analyzeSite}
-                  className="px-8 py-4 bg-[#00B7CE] text-white rounded-full font-bold flex items-center justify-center gap-2 hover:brightness-110 transition"
-                  disabled={loading}
-                >
-                  <span>診断を実行 ✨</span>
-                  <div className={`loading-spinner ${loading ? "" : "hidden"}`} />
-                </button>
-              </div>
-
-              <div className={`${analysis ? "" : "hidden"} fade-in bg-white p-8 rounded-2xl shadow-sm border border-gray-100`}>
-                <h4 className="font-bold text-lg mb-4 flex items-center gap-2 text-[#00B7CE]">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                  改善シミュレーション
-                </h4>
-                <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">{analysis}</div>
               </div>
             </div>
           </div>

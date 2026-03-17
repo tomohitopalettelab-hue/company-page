@@ -296,13 +296,13 @@ export default function PalBaseClient() {
             <div className="flex flex-col items-center gap-4">
               <Link
                 href="/diagnosis"
-                className="inline-flex px-8 py-5 bg-[#8CC63F] text-white rounded-full font-bold text-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
+                className="inline-flex px-10 py-5 bg-[#8CC63F] text-white rounded-full font-bold text-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all"
               >
                 無料診断
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex px-8 py-5 bg-black text-white rounded-full font-bold text-xl shadow-xl hover:bg-gray-800 transition-all"
+                className="inline-flex px-10 py-5 bg-black text-white rounded-full font-bold text-xl shadow-xl hover:bg-gray-800 transition-all"
               >
                 お問い合わせ
               </Link>

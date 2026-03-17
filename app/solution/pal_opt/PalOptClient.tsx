@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Noto_Sans_JP } from "next/font/google";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const notoSans = Noto_Sans_JP({
   weight: ["300", "400", "700"],
@@ -10,19 +10,7 @@ const notoSans = Noto_Sans_JP({
   display: "swap",
 });
 
-type GeneratedPosts = {
-  seo: string;
-  sns: string;
-  meo: string;
-};
-
-const emptyPosts: GeneratedPosts = { seo: "", sns: "", meo: "" };
-
 export default function PalOptClient() {
-  const [title, setTitle] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [posts, setPosts] = useState<GeneratedPosts | null>(null);
-
   useEffect(() => {
     const sections = document.querySelectorAll("section");
     const observer = new IntersectionObserver(
@@ -40,72 +28,6 @@ export default function PalOptClient() {
     return () => observer.disconnect();
   }, []);
 
-  const callGemini = async (prompt: string, systemInstruction = "") => {
-    const apiKey = "";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-    const payload = {
-      contents: [{ parts: [{ text: prompt }] }],
-      systemInstruction: { parts: [{ text: systemInstruction }] },
-      generationConfig: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: "OBJECT",
-          properties: {
-            seo: { type: "string" },
-            sns: { type: "string" },
-            meo: { type: "string" },
-          },
-        },
-      },
-    };
-
-    for (let i = 0; i < 5; i += 1) {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await response.json();
-        const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!raw) throw new Error("Empty response");
-        const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
-        return {
-          seo: parsed?.seo ?? "",
-          sns: parsed?.sns ?? "",
-          meo: parsed?.meo ?? "",
-        } as GeneratedPosts;
-      } catch (_e) {
-        await new Promise((resolve) => setTimeout(resolve, Math.pow(2, i) * 1000));
-      }
-    }
-
-    return null;
-  };
-
-  const generatePosts = async () => {
-    if (!title.trim()) return;
-    setLoading(true);
-    setPosts(null);
-
-    const systemPrompt = `あなたは運用最適化ツール『Pal-Opt』のAIライターです。
-入力されたタイトルを元に、3つの媒体向けの投稿案を作成してください：
-1. seo: 読者の悩みを解決し、信頼を高めるブログ用リード文
-2. sns: 絵文字を活用し、スマホで流し読みしても指が止まるInstagram用キャプション
-3. meo: 地域性や最新情報を強調したGoogleビジネスプロフィール用の投稿
-
-回答はJSON形式で、各媒体の特性に合わせたトーンで出力してください。`;
-
-    const response = await callGemini(`「${title}」というテーマで投稿案を作って。`, systemPrompt);
-
-    if (response) {
-      setPosts(response);
-    } else {
-      setPosts({ ...emptyPosts });
-    }
-
-    setLoading(false);
-  };
 
   return (
     <main className={`${notoSans.className} bg-white text-gray-900`}>
@@ -311,60 +233,6 @@ export default function PalOptClient() {
               </div>
             </div>
             <p className="text-lg opacity-80 mt-12">AIがあなたの代わりに考え、書き、投稿する。</p>
-          </div>
-        </section>
-
-        <section className="slide bg-white">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4 magenta-gradient">AI Multi-Post Simulator</h2>
-              <p className="text-gray-600">
-                タイトルを入力するだけで、全プラットフォーム向けの投稿案を即座に生成します。
-              </p>
-            </div>
-
-            <div className="bg-gray-100 p-8 rounded-[2.5rem] shadow-inner">
-              <div className="flex flex-col md:flex-row gap-4 mb-8">
-                <input
-                  type="text"
-                  placeholder="投稿のテーマ（例：新商品のランチ開始）"
-                  className="flex-1 px-6 py-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#A62183]"
-                  value={title}
-                  onChange={(event) => setTitle(event.target.value)}
-                />
-                <button
-                  onClick={generatePosts}
-                  className="px-8 py-4 bg-[#A62183] text-white rounded-full font-bold flex items-center justify-center gap-2 hover:brightness-110 transition"
-                  disabled={loading}
-                >
-                  <span>AIで一括生成 🚀</span>
-                  <div className={`loading-spinner ${loading ? "" : "hidden"}`} />
-                </button>
-              </div>
-
-              {posts && (
-                <div className="fade-in grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="text-xs font-bold px-2 py-1 bg-blue-50 text-blue-500 rounded">SEO Blog</span>
-                    </div>
-                    <div className="text-[10px] text-gray-600 leading-relaxed line-clamp-6">{posts.seo}</div>
-                  </div>
-                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="text-xs font-bold px-2 py-1 bg-pink-50 text-pink-500 rounded">SNS (Instagram)</span>
-                    </div>
-                    <div className="text-[10px] text-gray-600 leading-relaxed line-clamp-6">{posts.sns}</div>
-                  </div>
-                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="text-xs font-bold px-2 py-1 bg-green-50 text-green-500 rounded">Google MEO</span>
-                    </div>
-                    <div className="text-[10px] text-gray-600 leading-relaxed line-clamp-6">{posts.meo}</div>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </section>
 

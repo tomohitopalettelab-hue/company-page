@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Noto_Sans_JP } from "next/font/google";
-import { useState } from "react";
 import { Instagram, MessageCircle, X } from "lucide-react";
 import { solutionServices } from "../data";
 
@@ -14,54 +13,6 @@ const notoSans = Noto_Sans_JP({
 });
 
 export default function PalTrustClient() {
-  const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [analysis, setAnalysis] = useState("");
-
-  const callGemini = async (prompt: string, systemInstruction = "") => {
-    const apiKey = "";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-    const payload = {
-      contents: [{ parts: [{ text: prompt }] }],
-      systemInstruction: { parts: [{ text: systemInstruction }] },
-    };
-
-    for (let i = 0; i < 5; i += 1) {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await response.json();
-        return data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "分析に失敗しました。";
-      } catch (_e) {
-        await new Promise((resolve) => setTimeout(resolve, Math.pow(2, i) * 1000));
-      }
-    }
-    return "リトライ上限に達しました。";
-  };
-
-  const analyzeBusiness = async () => {
-    if (!query.trim()) return;
-    setLoading(true);
-    setAnalysis("");
-
-    const systemPrompt = `あなたは『Pal-Trust』の集客コンサルタントです。提案資料に基づき、Googleマップの口コミ対策の重要性を説いてください。
-入力された店名やエリアに対して：
-1. その業種における口コミの重要性（一言）
-2. 口コミ件数が30件増えた場合の問い合わせ数予測シミュレーション
-3. Pal-Trustを導入した場合に、AIがどのような口コミ投稿案を作成するかのサンプル（1件）
-を日本語で、構造化して回答してください。`;
-
-    const res = await callGemini(
-      `${query} の集客状況を分析し、Pal-Trustの導入効果をシミュレーションしてください。`,
-      systemPrompt
-    );
-
-    setAnalysis(res);
-    setLoading(false);
-  };
 
   return (
     <main className={`${notoSans.className} bg-gray-100 text-gray-900 w-full`}>
@@ -202,45 +153,6 @@ export default function PalTrustClient() {
                   <div className="p-3 bg-gray-100 rounded-lg">HP閲覧</div>
                   <div className="p-3 bg-black text-white rounded-lg text-center">問い合わせ</div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="slide bg-white">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4 gemini-gradient">AI Market Analysis</h2>
-              <p className="text-gray-600">Gemini AIがGoogleマップ上の現状と、最適な口コミ対策を分析します。</p>
-            </div>
-
-            <div className="bg-gray-100 p-8 rounded-[2.5rem]">
-              <div className="flex flex-col md:flex-row gap-4 mb-8">
-                <input
-                  type="text"
-                  placeholder="店名やエリアを入力（例：大阪市 カフェ）"
-                  className="flex-1 px-6 py-4 rounded-full border border-gray-300 focus:outline-none"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                />
-                <button
-                  onClick={analyzeBusiness}
-                  className="px-8 py-4 bg-black text-white rounded-full font-bold flex items-center justify-center gap-2 hover:bg-gray-800 transition"
-                  disabled={loading}
-                >
-                  <span>現状を分析する</span>
-                  <div className={`loading-spinner ${loading ? "" : "hidden"}`} />
-                </button>
-              </div>
-
-              <div className={`${analysis ? "" : "hidden"} fade-in bg-white p-8 rounded-2xl shadow-sm border border-gray-100`}>
-                <h4 className="font-bold text-lg mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L14.85 8.65L22 9.24L16.5 13.97L18.18 21L12 17.27L5.82 21L7.5 13.97L2 9.24L9.15 8.65L12 2Z" />
-                  </svg>
-                  改善シミュレーション
-                </h4>
-                <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">{analysis}</div>
               </div>
             </div>
           </div>
