@@ -46,10 +46,24 @@ export default function PaletteConsoleClient() {
           color: #fff;
         }
         .slide-container {
-          scroll-snap-type: y mandatory;
-          height: 100vh;
-          overflow-y: scroll;
           scroll-behavior: smooth;
+        }
+        @media (min-width: 768px) {
+          .slide-container {
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+          }
+          .slide {
+            scroll-snap-align: start;
+          }
+          .slide-container::-webkit-scrollbar {
+            display: none;
+          }
+          .slide-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
         }
         .slide {
           min-height: 100vh;
@@ -57,7 +71,6 @@ export default function PaletteConsoleClient() {
           flex-direction: column;
           justify-content: center;
           padding: 4rem 2rem;
-          scroll-snap-align: start;
           position: relative;
         }
         .fade-in {
@@ -84,13 +97,6 @@ export default function PaletteConsoleClient() {
           background: rgba(255, 255, 255, 0.03);
           backdrop-filter: blur(10px);
           border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .slide-container::-webkit-scrollbar {
-          display: none;
-        }
-        .slide-container {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
         }
         .service-dot {
           width: 8px;

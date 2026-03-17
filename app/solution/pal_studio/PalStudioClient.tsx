@@ -84,10 +84,24 @@ export default function PalStudioClient() {
           padding: 0;
         }
         .slide-container {
-          scroll-snap-type: y mandatory;
-          height: 100vh;
-          overflow-y: scroll;
           scroll-behavior: smooth;
+        }
+        @media (min-width: 768px) {
+          .slide-container {
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+          }
+          .slide {
+            scroll-snap-align: start;
+          }
+          .slide-container::-webkit-scrollbar {
+            display: none;
+          }
+          .slide-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
         }
         .slide {
           min-height: 100vh;
@@ -95,7 +109,6 @@ export default function PalStudioClient() {
           flex-direction: column;
           justify-content: center;
           padding: 4rem 2rem;
-          scroll-snap-align: start;
           position: relative;
         }
         .fade-in {
@@ -140,13 +153,6 @@ export default function PalStudioClient() {
           100% {
             transform: rotate(360deg);
           }
-        }
-        .slide-container::-webkit-scrollbar {
-          display: none;
-        }
-        .slide-container {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
         }
       `}</style>
 

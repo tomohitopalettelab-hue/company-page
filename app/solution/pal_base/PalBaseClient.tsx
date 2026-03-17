@@ -43,12 +43,26 @@ export default function PalBaseClient() {
           flex-direction: column;
           justify-content: center;
           padding: 4rem 2rem;
-          scroll-snap-align: start;
         }
         .slide-container {
-          scroll-snap-type: y mandatory;
-          height: 100vh;
-          overflow-y: scroll;
+          scroll-behavior: smooth;
+        }
+        @media (min-width: 768px) {
+          .slide-container {
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+          }
+          .slide {
+            scroll-snap-align: start;
+          }
+          .slide-container::-webkit-scrollbar {
+            display: none;
+          }
+          .slide-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
         }
         .fade-in {
           opacity: 0;
@@ -76,13 +90,6 @@ export default function PalBaseClient() {
           width: 100%;
           max-width: 1200px;
           margin: 0 auto;
-        }
-        .slide-container::-webkit-scrollbar {
-          display: none;
-        }
-        .slide-container {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
         }
         .base-card {
           background: white;

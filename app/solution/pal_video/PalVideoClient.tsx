@@ -38,10 +38,24 @@ export default function PalVideoClient() {
           padding: 0;
         }
         .slide-container {
-          scroll-snap-type: y mandatory;
-          height: 100vh;
-          overflow-y: scroll;
           scroll-behavior: smooth;
+        }
+        @media (min-width: 768px) {
+          .slide-container {
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+          }
+          .slide {
+            scroll-snap-align: start;
+          }
+          .slide-container::-webkit-scrollbar {
+            display: none;
+          }
+          .slide-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
         }
         .slide {
           min-height: 100vh;
@@ -49,7 +63,6 @@ export default function PalVideoClient() {
           flex-direction: column;
           justify-content: center;
           padding: 4rem 2rem;
-          scroll-snap-align: start;
           position: relative;
         }
         .fade-in {
@@ -81,13 +94,6 @@ export default function PalVideoClient() {
           background: url("https://www.transparenttextures.com/patterns/p6.png");
           opacity: 0.05;
           pointer-events: none;
-        }
-        .slide-container::-webkit-scrollbar {
-          display: none;
-        }
-        .slide-container {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
         }
         .play-button {
           width: 80px;

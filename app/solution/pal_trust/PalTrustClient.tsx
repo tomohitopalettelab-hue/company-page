@@ -82,7 +82,6 @@ export default function PalTrustClient() {
           flex-direction: column;
           justify-content: center;
           padding: 4rem 2rem;
-          scroll-snap-align: start;
         }
         .hero-slide {
           padding: 0 1rem 2rem;
@@ -102,20 +101,27 @@ export default function PalTrustClient() {
           pointer-events: none;
         }
         .container {
-          scroll-snap-type: y mandatory;
-          height: 100vh;
-          overflow-y: scroll;
-          overscroll-behavior: auto;
           width: 100%;
           max-width: none;
           margin: 0;
+          scroll-behavior: smooth;
         }
-        .container::-webkit-scrollbar {
-          display: none;
-        }
-        .container {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        @media (min-width: 768px) {
+          .container {
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+          }
+          .slide {
+            scroll-snap-align: start;
+          }
+          .container::-webkit-scrollbar {
+            display: none;
+          }
+          .container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
         }
         .fade-in {
           opacity: 1;

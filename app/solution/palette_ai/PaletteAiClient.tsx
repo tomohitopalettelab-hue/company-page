@@ -38,10 +38,24 @@ export default function PaletteAiClient() {
           padding: 0;
         }
         .slide-container {
-          scroll-snap-type: y mandatory;
-          height: 100vh;
-          overflow-y: scroll;
           scroll-behavior: smooth;
+        }
+        @media (min-width: 768px) {
+          .slide-container {
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+          }
+          .slide {
+            scroll-snap-align: start;
+          }
+          .slide-container::-webkit-scrollbar {
+            display: none;
+          }
+          .slide-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
         }
         .slide {
           min-height: 100vh;
@@ -49,7 +63,6 @@ export default function PaletteAiClient() {
           flex-direction: column;
           justify-content: center;
           padding: 4rem 2rem;
-          scroll-snap-align: start;
           position: relative;
         }
         .fade-in {
@@ -78,13 +91,6 @@ export default function PaletteAiClient() {
           background: rgba(255, 255, 255, 0.8);
           backdrop-filter: blur(20px);
           border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        .slide-container::-webkit-scrollbar {
-          display: none;
-        }
-        .slide-container {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
         }
         .neural-bg {
           position: absolute;
