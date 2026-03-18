@@ -119,10 +119,10 @@ export default function PalStudioClient() {
           </div>
           <div className="max-w-4xl mx-auto z-10">
             <p className="text-[#00B7CE] font-bold tracking-[0.4em] mb-6 fade-in uppercase">2026 Palette Lab</p>
-            <h1 className="text-5xl md:text-8xl font-bold mb-8 leading-tight fade-in text-white">
+            <h1 className="hero-title text-5xl md:text-8xl font-bold mb-8 fade-in text-white">
               Pal-Studio
               <br />
-              <span className="turquoise-gradient italic">集客改善提案</span>
+              <span className="turquoise-gradient italic">集客改善&nbsp;</span>
             </h1>
             <p className="text-gray-400 text-xl mb-12 fade-in">課題解決の為の「最適解」をお届けする</p>
             <div className="w-20 h-1 bg-[#00B7CE] mx-auto fade-in" />

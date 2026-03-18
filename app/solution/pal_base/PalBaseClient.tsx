@@ -109,10 +109,10 @@ export default function PalBaseClient() {
           </div>
           <div className="slide-inner z-10">
             <p className="text-[#8CC63F] font-bold tracking-[0.4em] mb-6 fade-in uppercase">2026 Palette Lab</p>
-            <h1 className="text-5xl md:text-8xl font-bold mb-8 leading-tight fade-in text-white">
+            <h1 className="hero-title text-5xl md:text-8xl font-bold mb-8 fade-in text-white">
               Pal-Base
               <br />
-              <span className="lime-gradient italic">地域集客基盤提案</span>
+              <span className="lime-gradient italic">地域集客基盤&nbsp;</span>
             </h1>
             <p className="text-gray-400 text-xl mb-12 fade-in">「見つけて、繋がる」当たり前を、最強の武器に。</p>
             <div className="w-20 h-1 bg-[#8CC63F] mx-auto fade-in" />

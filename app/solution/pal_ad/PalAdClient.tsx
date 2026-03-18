@@ -105,10 +105,10 @@ export default function PalAdClient() {
           </div>
           <div className="slide-inner z-10">
             <p className="text-[#F39800] font-bold tracking-[0.4em] mb-6 fade-in uppercase">2026 Palette Lab</p>
-            <h1 className="text-5xl md:text-8xl font-bold mb-8 leading-tight fade-in text-white">
+            <h1 className="hero-title text-5xl md:text-8xl font-bold mb-8 fade-in text-white">
               Pal-Ad
               <br />
-              <span className="orange-gradient italic">集客加速提案</span>
+              <span className="orange-gradient italic">集客加速&nbsp;</span>
             </h1>
             <p className="text-gray-400 text-xl mb-12 fade-in">広告を、もっと「自由」で「透明」な武器へ</p>
             <div className="w-20 h-1 bg-[#F39800] mx-auto fade-in" />

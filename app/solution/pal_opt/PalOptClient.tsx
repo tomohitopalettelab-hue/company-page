@@ -114,10 +114,10 @@ export default function PalOptClient() {
           </div>
           <div className="max-w-4xl mx-auto z-10">
             <p className="text-[#A62183] font-bold tracking-[0.4em] mb-6 fade-in uppercase">2026 Palette Lab</p>
-            <h1 className="text-5xl md:text-8xl font-bold mb-8 leading-tight fade-in text-white">
+            <h1 className="hero-title text-5xl md:text-8xl font-bold mb-8 fade-in text-white">
               Pal-Opt
               <br />
-              <span className="magenta-gradient italic">運用最適化提案</span>
+              <span className="magenta-gradient italic">運用最適化&nbsp;</span>
             </h1>
             <p className="text-gray-400 text-xl mb-12 fade-in">「見つかる」を科学し、自動化する</p>
             <div className="w-20 h-1 bg-[#A62183] mx-auto fade-in" />

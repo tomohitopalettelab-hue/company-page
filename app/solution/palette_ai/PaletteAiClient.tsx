@@ -124,10 +124,10 @@ export default function PaletteAiClient() {
           <div className="neural-bg" />
           <div className="max-w-4xl mx-auto z-10">
             <p className="text-gray-400 font-bold tracking-[0.4em] mb-6 fade-in uppercase">2026 Palette Lab</p>
-            <h1 className="text-5xl md:text-8xl font-bold mb-8 leading-[1.1] fade-in text-black">
+            <h1 className="hero-title text-5xl md:text-8xl font-bold mb-8 fade-in text-black">
               Palette AI
               <br />
-              <span className="white-gradient italic inline-block pb-1">統合知能の覚醒</span>
+              <span className="white-gradient italic">統合知能の覚醒&nbsp;</span>
             </h1>
             <p className="text-gray-500 text-xl mb-12 fade-in">すべての Palette サービスをつなぐ、ビジネスの「脳」</p>
             <div className="w-20 h-px bg-black mx-auto fade-in" />

@@ -117,10 +117,10 @@ export default function PalVideoClient() {
           </div>
           <div className="max-w-4xl mx-auto z-10">
             <p className="text-[#E95464] font-bold tracking-[0.4em] mb-6 fade-in uppercase">2026 Palette Lab</p>
-            <h1 className="text-5xl md:text-8xl font-bold mb-8 leading-tight fade-in text-white">
+            <h1 className="hero-title text-5xl md:text-8xl font-bold mb-8 fade-in text-white">
               Pal-Video
               <br />
-              <span className="coral-gradient italic">映像戦略提案</span>
+              <span className="coral-gradient italic">映像戦略&nbsp;</span>
             </h1>
             <p className="text-gray-400 text-xl mb-12 fade-in">言葉を超え、感情を揺さぶるブランド表現</p>
             <div className="w-20 h-1 bg-[#E95464] mx-auto fade-in" />

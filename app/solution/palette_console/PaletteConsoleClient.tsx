@@ -117,7 +117,7 @@ export default function PaletteConsoleClient() {
             <p className={`text-gray-500 font-bold tracking-[0.5em] mb-6 fade-in uppercase ${jetBrains.className}`}>
               System.Status: Active
             </p>
-            <h1 className="text-6xl md:text-9xl font-bold mb-8 leading-tight fade-in tracking-tighter">
+            <h1 className="hero-title text-6xl md:text-9xl font-bold mb-8 fade-in tracking-tighter">
               Palette
               <br />
               <span className="italic underline decoration-1 underline-offset-8">Console</span>
