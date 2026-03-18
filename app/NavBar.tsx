@@ -31,7 +31,6 @@ export default function NavBar() {
             <summary
               className="list-none cursor-pointer p-2 rounded-xl bg-white/80 border border-slate-200 text-slate-700 hover:text-blue-600 transition-colors"
               aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((open) => !open)}
             >
               <Menu size={20} />
             </summary>
